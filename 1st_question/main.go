@@ -35,7 +35,6 @@ func buildDummyTree() (root *TreeNode) {
 		Val:   7,
 	}
 
-
 	r.Left = createTreeNode(6)
 	r.Left.Left = createTreeNode(3)
 	r.Left.Right = createTreeNode(20)
