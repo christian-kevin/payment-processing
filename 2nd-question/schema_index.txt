@@ -1,0 +1,26 @@
+- user
+    id PK
+    username unique key
+- team_user
+    user_id FK
+    team_id FK
+- teams
+    id PK
+- wallet
+    id PK
+    (parent_type, parent_id) composite unique
+- card
+    id PK
+    wallet_id unique key
+- card_transaction_log
+    id PK
+    card_id unique key
+- wallet_transaction_log
+    id PK
+    wallet_id unique key
+- limit
+    id PK
+    (parent_type, parent_id) composite unique
+
+
+Database can be Postgres / MySQL
