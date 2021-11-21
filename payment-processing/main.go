@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	//config.InitializeAppConfig()
+	config.InitializeAppConfig()
 	log.InitializeLogger(config.AppConfig.AppName)
 
 	c := make(chan os.Signal)

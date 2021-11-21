@@ -1,0 +1,29 @@
+version: '2.2'
+services:
+  mysql:
+    image: mysql:5.7.25
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=kevin
+      - MYSQL_PASSWORD=test123
+    restart: always
+    command: --init-file /data/mysql/init.sql
+    volumes:
+      - /data/mysql
+      - ./init.sql:/data/mysql/init.sql
+    ports:
+      - 4402:3306
+  web:
+    build: .
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    volumes:
+      - /data/web
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 6400:6379

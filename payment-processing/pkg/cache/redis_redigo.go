@@ -23,8 +23,6 @@ const (
 	redisHVals            = "HVALS"
 	redisHGetAll          = "HGETALL"
 	redisHLen             = "HLEN"
-	redisScan             = "SCAN"
-	redisMatch            = "MATCH"
 	redisIncrBy           = "INCRBY"
 	redisDel              = "DEL"
 	redisHDel             = "HDEL"

@@ -17,3 +17,9 @@ FROM alpine:latest
 ENV APP_DIR /payment-processing
 
 COPY --from=builder ${APP_DIR}/payment-processing .
+RUN mkdir config
+COPY --from=builder ${APP_DIR}/config/config.env ./config
+
+EXPOSE 8080
+
+CMD ["./payment-processing"]
