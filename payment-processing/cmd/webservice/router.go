@@ -6,13 +6,14 @@ import (
 	"spenmo/payment-processing/payment-processing/internal/pkg/component"
 	"spenmo/payment-processing/payment-processing/internal/pkg/dto/response"
 	"spenmo/payment-processing/payment-processing/internal/pkg/middleware"
+	"spenmo/payment-processing/payment-processing/internal/pkg/store/redis"
 	"spenmo/payment-processing/payment-processing/pkg/routergroup"
 	"time"
 )
 
 type dependencies struct {
 	db                  *component.Database
-	//cacher              redis.Store
+	cacher              redis.Store
 }
 
 // Init to initialize the web-service router
@@ -50,10 +51,10 @@ func Ping(dep *dependencies) http.HandlerFunc {
 			panic(err)
 		}
 
-		//err = dep.cacher.Ping()
-		//if err != nil {
-		//	panic(err)
-		//}
+		err = dep.cacher.Ping()
+		if err != nil {
+			panic(err)
+		}
 
 		response.WriteResponse(w, &response.PingResponse{
 			Status:          "ok",
