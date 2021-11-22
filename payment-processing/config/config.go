@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"path/filepath"
-	"spenmo/payment-processing/payment-processing/pkg/timeutil"
+	"spenmo/payment-processing/payment-processing/internal/pkg/timeutil"
 )
 
 // AppConfig is config object to use across application
@@ -55,14 +55,6 @@ type config struct {
 	MySQLDB      string
 	MySQLMaxIdle int
 	MySQLMaxOpen int
-
-	SlaveMySQLUser    string
-	SlaveMySQLPass    string
-	SlaveMySQLHost    string
-	SlaveMySQLPort    string
-	SlaveMySQLDB      string
-	SlaveMySQLMaxIdle int
-	SlaveMySQLMaxOpen int
 }
 
 func parseConfigFilePath() string {
@@ -143,25 +135,4 @@ func initMySQL(c *config) {
 		c.MySQLMaxIdle = 2
 	}
 	c.MySQLMaxOpen = viper.GetInt("mysqlmaxopen")
-
-	// MySQL slave
-	if c.SlaveMySQLUser = viper.GetString("slavemysqluser"); c.SlaveMySQLUser == "" {
-		panic("slavemysql username is missing in config")
-	}
-	if c.SlaveMySQLPass = viper.GetString("slavemysqlpass"); c.SlaveMySQLPass == "" {
-		panic("slavemysql password is missing in config")
-	}
-	if c.SlaveMySQLHost = viper.GetString("slavemysqlhost"); c.SlaveMySQLHost == "" {
-		panic("slavemysql host is missing in config")
-	}
-	if c.SlaveMySQLPort = viper.GetString("slavemysqlport"); c.SlaveMySQLPort == "" {
-		panic("slavemysql port is missing in config")
-	}
-	if c.SlaveMySQLDB = viper.GetString("slavemysqldb"); c.SlaveMySQLDB == "" {
-		panic("slavemysql database is missing in config")
-	}
-	if c.SlaveMySQLMaxIdle = viper.GetInt("slavemysqlmaxidle"); c.SlaveMySQLMaxIdle == 0 {
-		c.SlaveMySQLMaxIdle = 2
-	}
-	c.SlaveMySQLMaxOpen = viper.GetInt("slavemysqlmaxopen")
 }

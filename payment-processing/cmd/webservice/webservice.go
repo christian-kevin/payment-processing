@@ -17,8 +17,13 @@ func Start() {
 		panic(err)
 	}
 
+	rCardStore := redis.NewCardStore(cache)
+	rWalletStore := redis.NewWalletStore(cache)
+
 	log.Get().Error(log.GetEmptyContext(), http.ListenAndServe(":8080", routerStart(&dependencies{
-		db:                  database,
-		cacher:              redis.NewStore(cache),
+		db:           database,
+		cacher:       redis.NewStore(cache),
+		rCardStore:   rCardStore,
+		rWalletStore: rWalletStore,
 	})).Error())
 }

@@ -3,6 +3,8 @@ package webservice
 import (
 	"net/http"
 	"spenmo/payment-processing/payment-processing/config"
+	"spenmo/payment-processing/payment-processing/internal/app/public/handler"
+	controller "spenmo/payment-processing/payment-processing/internal/app/public/http"
 	"spenmo/payment-processing/payment-processing/internal/pkg/component"
 	"spenmo/payment-processing/payment-processing/internal/pkg/dto/response"
 	"spenmo/payment-processing/payment-processing/internal/pkg/middleware"
@@ -34,9 +36,10 @@ func handlePublicRoutes(router *routergroup.Router, dep *dependencies) {
 	publicGroup := router.Group("/public")
 	publicGroup.Use(middleware.InjectCors, tenantMiddleware.Enforce, authMiddleware.Enforce)
 
-	//module := handler.NewModule(
-	//)
-	//controller.ApplyRoutes(publicGroup, module)
+	module := handler.NewModule(
+		dep.rCardStore,
+		dep.rWalletStore)
+	controller.ApplyRoutes(publicGroup, module)
 }
 
 func Ping(dep *dependencies) http.HandlerFunc {
@@ -58,5 +61,4 @@ func Ping(dep *dependencies) http.HandlerFunc {
 			Environment:     string(config.AppConfig.Env),
 		}, nil)
 	}
-
 }

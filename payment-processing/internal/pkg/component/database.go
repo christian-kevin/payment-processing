@@ -41,25 +41,5 @@ func InitializeDatabase() (database *Database, err error) {
 		return nil, fmt.Errorf("failed to ping default database. %+v", err)
 	}
 
-	// slave database
-	connectionString = fmt.Sprintf(DBConnectionString,
-		config.AppConfig.SlaveMySQLUser,
-		config.AppConfig.SlaveMySQLPass,
-		config.AppConfig.SlaveMySQLHost,
-		config.AppConfig.SlaveMySQLPort,
-		config.AppConfig.SlaveMySQLDB,
-	)
-	database.Slave, err = sql.Open(DBType, connectionString)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open slave database connection. %+v", err)
-	}
-	database.Slave.SetMaxIdleConns(config.AppConfig.SlaveMySQLMaxIdle)
-	database.Slave.SetMaxOpenConns(config.AppConfig.SlaveMySQLMaxOpen)
-
-	err = database.Slave.Ping()
-	if err != nil {
-		return nil, fmt.Errorf("failed to ping slave database. %+v", err)
-	}
-
 	return
 }

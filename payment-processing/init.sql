@@ -1,6 +1,13 @@
 CREATE DATABASE IF NOT EXISTS `app`;
 USE `app`;
 
+DROP TABLE user;
+DROP TABLE wallet;
+DROP TABLE card;
+DROP TABLE card_transaction_log;
+DROP TABLE wallet_balance_log;
+DROP TABLE limits;
+
 CREATE TABLE user (
   id BIGINT AUTO_INCREMENT NOT NULL,
   username VARCHAR(100) NOT NULL,
@@ -9,6 +16,8 @@ CREATE TABLE user (
   PRIMARY KEY(id),
   KEY k_username_on_user(username) USING BTREE
 );
+
+INSERT INTO user (username, password, country) VALUES ('spenmo', 'spenmo123', 'id');
 
 CREATE TABLE wallet (
   id BIGINT AUTO_INCREMENT NOT NULL,
@@ -59,5 +68,3 @@ CREATE TABLE limits (
   PRIMARY KEY(id),
   KEY k_parent_type_parent_id_on_limits(parent_type, parent_id) USING BTREE
 );
-
-INSERT INTO user (username, password, country) VALUES (`spenmo`, `spenmo123`, `id`);
