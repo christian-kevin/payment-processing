@@ -5,16 +5,16 @@ type Store interface {
 }
 
 type RWalletStore interface {
-	LockCreateWallet(userID int64)
-	ReleaseLockCreateWallet(userID int64)
+	LockCreateWallet(userID int64) error
+	ReleaseLockCreateWallet(userID int64) error
 
-	LockUpdateWallet(walletID int64)
-	ReleaseLockUpdateWallet(walletID int64)
+	LockUpdateWallet(userID, walletID int64) error
+	ReleaseLockUpdateWallet(userID, walletID int64) error
 }
 
 type RCardStore interface {
-	LockCreateCard(walletID int64)
-	ReleaseLockCreateCard(walletID int64)
+	LockCreateCard(walletID int64) error
+	ReleaseLockCreateCard(walletID int64) error
 
-	CreateTransaction(limit int64, amount int64, cardID int64)
+	CreateTransaction(limit int64, amount int64, cardID int64) error
 }

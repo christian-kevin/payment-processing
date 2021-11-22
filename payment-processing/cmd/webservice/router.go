@@ -12,8 +12,10 @@ import (
 )
 
 type dependencies struct {
-	db                  *component.Database
-	cacher              redis.Store
+	db           *component.Database
+	cacher       redis.Store
+	rWalletStore redis.RWalletStore
+	rCardStore   redis.RCardStore
 }
 
 // Init to initialize the web-service router
@@ -21,27 +23,20 @@ func routerStart(dep *dependencies) *routergroup.Router {
 	router := routergroup.New()
 
 	handlePublicRoutes(router, dep)
-	handlePrivateRoutes(router, dep)
 	router.GET("/ping", Ping(dep))
 	return router
 }
 
 func handlePublicRoutes(router *routergroup.Router, dep *dependencies) {
 	tenantMiddleware := middleware.NewTenant()
+	authMiddleware := middleware.NewAuth()
 
 	publicGroup := router.Group("/public")
-	publicGroup.Use(middleware.InjectCors, tenantMiddleware.Enforce)
+	publicGroup.Use(middleware.InjectCors, tenantMiddleware.Enforce, authMiddleware.Enforce)
 
 	//module := handler.NewModule(
 	//)
 	//controller.ApplyRoutes(publicGroup, module)
-}
-
-func handlePrivateRoutes(router *routergroup.Router, dep *dependencies) {
-	//privateGroup := router.Group("/private")
-
-	//module := privateHandler.NewModule()
-	//privateController.ApplyRoutes(privateGroup, module)
 }
 
 func Ping(dep *dependencies) http.HandlerFunc {

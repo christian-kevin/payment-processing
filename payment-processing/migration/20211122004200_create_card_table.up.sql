@@ -5,6 +5,7 @@ CREATE TABLE card (
     expiry_date VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
     created_at BIGINT NOT NULL,
+    is_deleted TINYINT NOT NULL,
     PRIMARY KEY(id),
     KEY k_wallet_id_on_card(wallet_id) USING BTREE
 );

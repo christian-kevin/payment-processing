@@ -3,10 +3,14 @@
 ###Assumption
 - DB Sharding is out of scope
 - Redis cluster, master slave, sentinel mode, RDB, AOF are out of scope.
+- Card data encryption is out of scope.
 - Auth service can be separate on different microservice.
 - Can use multiple instance of payment-processing service, using loadbalancer in front
 - Rate limit is implemented on service now, can use nginx/kong/istio ingress + envoy,etc for rate limiter if using multiple instances.
 - Rate limit using simple rate limit for current QPS. can use more complex rate limit algorithm like leaky bucket, sliding window, etc for improvement.
+- On user table, plain password is used for simplicity
+- Auth method skipped, should be cookies on header then server compared with cookies stored on redis / db
+- CVV must not stored in DB (PCI DSS), usually use specific hardware for storing CVV and validate it 
 
 ###Directory Structure
 I am using directory structure guideline from [golang standard](https://github.com/golang-standards/project-layout)
