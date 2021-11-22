@@ -28,25 +28,27 @@ type Store interface {
 
 type WalletStore interface {
 	CreateWallet(ctx context.Context, execer Execer, wallet *dto.Wallet) (walletID int64, err error)
-	ModifyBalance(ctx context.Context, execer Execer, inflatedAmount int64, walletID int64) error
+	ModifyBalance(ctx context.Context, execer Execer, inflatedNewBalance int64, walletID int64) error
+	GetWalletByUserID(ctx context.Context, querier Querier, userID int64) (*dto.Wallet, error)
 }
 
 type CardStore interface {
-	CreateCard(ctx context.Context, execer Execer, walletID int64, cardNumber, expiryDate, name string) (cardID int64, err error)
+	CreateCard(ctx context.Context, execer Execer, card *dto.Card) (cardID int64, err error)
 	GetCards(ctx context.Context, querier Querier, walletID int64) ([]*dto.Card, error)
-	GetCardDetail(ctx context.Context, querier Querier, cardID int64) (*dto.Card, error)
+	GetCardByNumberAndExpiryDate(ctx context.Context, querier Querier, cardNumber string,
+		expiryDate string) (*dto.Card, error)
 	DeleteCard(ctx context.Context, execer Execer, cardID int64) error
 }
 
-type CardTransactionLog interface {
+type CardTransactionLogStore interface {
 	CreateLog(ctx context.Context, execer Execer, log *dto.CardTransactionLog) error
 }
 
-type WalletBalanceLog interface {
+type WalletBalanceLogStore interface {
 	CreateLog(ctx context.Context, execer Execer, log *dto.WalletBalanceLog) error
 }
 
-type Limit interface {
+type LimitStore interface {
 	CreateLimit(ctx context.Context, execer Execer, limit *dto.Limit) (limitID int64, err error)
-	GetLimit(ctx context.Context, querier Querier, parentType int, parentID int64) (*dto.Limit, error)
+	GetLimits(ctx context.Context, querier Querier, parentType int, parentID int64) ([]*dto.Limit, error)
 }
