@@ -14,6 +14,10 @@ func (m *Module) GetCards(ctx context.Context, userID int64) (*response.GetCards
 		return nil, errutil.ErrServerError
 	}
 
+	if w == nil {
+		return nil, errutil.ErrWalletNotFound
+	}
+
 	cards, err := m.cardStore.GetCards(ctx, m.cardStore.DBX(), w.ID)
 	if err != nil {
 		log.Get().Errorf(ctx, "error fetch cards, err: %s", err.Error())

@@ -12,7 +12,6 @@ type Card struct {
 	ExpiryDate string `json:"expiry_date"`
 	Name       string `json:"name"`
 	CreatedAt  int64  `json:"created_at"`
-	IsDeleted  int    `json:"is_deleted"`
 }
 
 func FromCardStore(card *dto.Card) *Card {
@@ -22,7 +21,6 @@ func FromCardStore(card *dto.Card) *Card {
 		ExpiryDate: card.ExpiryDate,
 		Name:       card.Name,
 		CreatedAt:  card.CreatedAt,
-		IsDeleted:  card.IsDeleted,
 	}
 	return &c
 }

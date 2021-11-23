@@ -41,7 +41,7 @@ func (m *Module) CreateCard(ctx context.Context, userID int64, name string) (*re
 	id, err := m.cardStore.CreateCard(ctx, m.cardStore.DBX(), &card)
 	if err != nil {
 		log.Get().Errorf(ctx, "failed to get create card, err: %s", err.Error())
-		return nil, errutil.ErrDuplicateRequest
+		return nil, errutil.ErrServerError
 	}
 
 	res := response.CreateCard{

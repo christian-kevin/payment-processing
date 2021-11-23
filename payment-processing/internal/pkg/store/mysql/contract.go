@@ -36,6 +36,7 @@ type WalletStore interface {
 type CardStore interface {
 	Store
 	CreateCard(ctx context.Context, execer Execer, card *dto.Card) (cardID int64, err error)
+	GetCardByID(ctx context.Context, querier Querier, cardID int64) (*dto.Card, error)
 	GetCards(ctx context.Context, querier Querier, walletID int64) ([]*dto.Card, error)
 	GetCardByNumberAndExpiryDate(ctx context.Context, querier Querier, cardNumber string,
 		expiryDate string) (*dto.Card, error)

@@ -46,11 +46,23 @@ const (
 			card_number,
 			expiry_date,
 			name,
-			created_at,
-			is_deleted
+			created_at
 		from card
 		where
-			wallet_id = ?
+			wallet_id = ? and is_deleted = 0
+	`
+
+	queryGetCardByID = `
+		select 
+			id,
+			wallet_id,
+			card_number,
+			expiry_date,
+			name,
+			created_at
+		from card
+		where
+			id = ? and is_deleted = 0
 	`
 
 	queryGetCardByCardNumberAndExpiryDate = `
@@ -60,11 +72,10 @@ const (
 			card_number,
 			expiry_date,
 			name,
-			created_at,
-			is_deleted
+			created_at
 		from card
 		where
-			card_number = ? and expiry_date = ?
+			card_number = ? and expiry_date = ? and is_deleted = 0
 	`
 
 	querySoftDeleteCardByID = `
@@ -109,6 +120,19 @@ func (c *cardStore) GetCardByNumberAndExpiryDate(ctx context.Context, querier Qu
 	expiryDate string) (*dto.Card, error) {
 	var card dto.Card
 	if err := querier.GetContext(ctx, &card, queryGetCardByCardNumberAndExpiryDate, cardNumber, expiryDate); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, fmt.Errorf("failed to find card: %w", err)
+	}
+
+	return &card, nil
+}
+
+func (c *cardStore) GetCardByID(ctx context.Context, querier Querier, cardID int64) (*dto.Card, error) {
+	var card dto.Card
+	if err := querier.GetContext(ctx, &card, queryGetCardByID, cardID); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}

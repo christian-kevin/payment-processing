@@ -11,4 +11,5 @@ func ApplyRoutes(r *routergroup.Router, m *handler.Module) {
 	r.GET("/v1/wallet", api.GetWallet(m.GetWallet))
 	r.POST("/v1/card", api.CreateCard(m.CreateCard))
 	r.GET("/v1/card/multiple", api.GetCards(m.GetCards))
+	r.DELETE("/v1/card", api.DeleteCard(m.DeleteCard))
 }

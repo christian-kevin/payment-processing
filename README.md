@@ -18,6 +18,8 @@
 - I don't know about update card, I think card should be immutable.
 - Usually for routes, there is nginx replace for replacing url path. For example `https://spenmo.com/order/v1/status/xxx` will redirected
   to order service and path replaced to `https://public/v1/status/xxxxx`
+- Card number generation use Luhn algorithm
+- Expiry date will took ID current local date time + 2 years
 
 ###Directory Structure
 I am using directory structure guideline from [golang standard](https://github.com/golang-standards/project-layout)
