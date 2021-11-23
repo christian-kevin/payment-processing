@@ -27,12 +27,14 @@ type Store interface {
 }
 
 type WalletStore interface {
+	Store
 	CreateWallet(ctx context.Context, execer Execer, wallet *dto.Wallet) (walletID int64, err error)
 	ModifyBalance(ctx context.Context, execer Execer, inflatedNewBalance int64, walletID int64) error
 	GetWalletByUserID(ctx context.Context, querier Querier, userID int64) (*dto.Wallet, error)
 }
 
 type CardStore interface {
+	Store
 	CreateCard(ctx context.Context, execer Execer, card *dto.Card) (cardID int64, err error)
 	GetCards(ctx context.Context, querier Querier, walletID int64) ([]*dto.Card, error)
 	GetCardByNumberAndExpiryDate(ctx context.Context, querier Querier, cardNumber string,
@@ -41,14 +43,17 @@ type CardStore interface {
 }
 
 type CardTransactionLogStore interface {
+	Store
 	CreateLog(ctx context.Context, execer Execer, log *dto.CardTransactionLog) error
 }
 
 type WalletBalanceLogStore interface {
+	Store
 	CreateLog(ctx context.Context, execer Execer, log *dto.WalletBalanceLog) error
 }
 
 type LimitStore interface {
+	Store
 	CreateLimit(ctx context.Context, execer Execer, limit *dto.Limit) (limitID int64, err error)
 	GetLimits(ctx context.Context, querier Querier, parentType int, parentID int64) ([]*dto.Limit, error)
 }

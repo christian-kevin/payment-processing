@@ -26,12 +26,12 @@ const (
 	insertWalletQuery = `
 		insert into wallet(
 			balance,
-			parent_key,
+			parent_id,
 			parent_type,
 			country
 		) values (
 			:balance,
-			:parent_key,
+			:parent_id,
 			:parent_type,
 			:country
 		)

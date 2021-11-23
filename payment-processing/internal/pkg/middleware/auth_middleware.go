@@ -14,8 +14,8 @@ func NewAuth() *auth {
 }
 
 const (
-	userIDHeaderKey = "Op-User-ID"
-	AuthCookieKey = "OP-AU"
+	userIDHeaderKey = "X-User-ID"
+	AuthCookieKey = "X-AU"
 )
 
 func (a *auth) Enforce(next http.Handler) http.Handler {

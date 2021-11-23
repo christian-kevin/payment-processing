@@ -8,16 +8,22 @@ import (
 	"spenmo/payment-processing/payment-processing/internal/pkg/component"
 	"spenmo/payment-processing/payment-processing/internal/pkg/dto/response"
 	"spenmo/payment-processing/payment-processing/internal/pkg/middleware"
+	"spenmo/payment-processing/payment-processing/internal/pkg/store/mysql"
 	"spenmo/payment-processing/payment-processing/internal/pkg/store/redis"
 	"spenmo/payment-processing/payment-processing/pkg/routergroup"
 	"time"
 )
 
 type dependencies struct {
-	db           *component.Database
-	cacher       redis.Store
-	rWalletStore redis.RWalletStore
-	rCardStore   redis.RCardStore
+	db                      *component.Database
+	cacher                  redis.Store
+	rWalletStore            redis.RWalletStore
+	rCardStore              redis.RCardStore
+	walletStore             mysql.WalletStore
+	cardStore               mysql.CardStore
+	limitStore              mysql.LimitStore
+	cardTransactionLogStore mysql.CardTransactionLogStore
+	walletBalanceLogStore   mysql.WalletBalanceLogStore
 }
 
 // Init to initialize the web-service router
@@ -38,7 +44,12 @@ func handlePublicRoutes(router *routergroup.Router, dep *dependencies) {
 
 	module := handler.NewModule(
 		dep.rCardStore,
-		dep.rWalletStore)
+		dep.rWalletStore,
+		dep.walletStore,
+		dep.cardStore,
+		dep.limitStore,
+		dep.cardTransactionLogStore,
+		dep.walletBalanceLogStore)
 	controller.ApplyRoutes(publicGroup, module)
 }
 

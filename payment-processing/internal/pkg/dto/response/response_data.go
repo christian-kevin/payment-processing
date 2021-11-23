@@ -20,8 +20,15 @@ type CommonResponse struct {
 
 func errorToHTTPStatus(err error) int {
 	switch err {
-	case errutil.ErrInvalidParam:
+	case errutil.ErrWalletNotFound:
+		return http.StatusNotFound
+	case errutil.ErrInvalidParam,
+		errutil.ErrWalletAlreadyExist,
+		errutil.ErrDuplicateRequest:
 		return http.StatusBadRequest
+	case errutil.ErrUnauthorized,
+		errutil.ErrContextValueNotFound:
+		return http.StatusUnauthorized
 	default:
 		return http.StatusInternalServerError
 	}

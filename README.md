@@ -16,6 +16,8 @@
   such as we can't use transaction, consistency need to be enforced using saga / double phased commit.
 - Delete card is soft delete.
 - I don't know about update card, I think card should be immutable.
+- Usually for routes, there is nginx replace for replacing url path. For example `https://spenmo.com/order/v1/status/xxx` will redirected
+  to order service and path replaced to `https://public/v1/status/xxxxx`
 
 ###Directory Structure
 I am using directory structure guideline from [golang standard](https://github.com/golang-standards/project-layout)
