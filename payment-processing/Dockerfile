@@ -20,6 +20,8 @@ COPY --from=builder ${APP_DIR}/payment-processing .
 RUN mkdir config
 COPY --from=builder ${APP_DIR}/config/config.env ./config
 
+RUN apk add tzdata ca-certificates
+
 EXPOSE 8080
 
 CMD ["./payment-processing"]

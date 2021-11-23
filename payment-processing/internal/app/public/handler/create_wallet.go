@@ -13,6 +13,7 @@ import (
 func (m *Module) CreateWallet(ctx context.Context, userID int64, country string) (*response.GetWallet, error) {
 	err := m.rWalletStore.LockCreateWallet(userID)
 	if err != nil {
+		log.Get().Errorf(ctx, "failed to get lock from redis, err: %s", err.Error())
 		return nil, errutil.ErrDuplicateRequest
 	}
 
