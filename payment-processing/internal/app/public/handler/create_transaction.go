@@ -83,13 +83,14 @@ func (m *Module) processTransaction(ctx context.Context, valInflated int64, limi
 			isSuccess = append(isSuccess, &lt)
 		}
 	}
-	defer func(err error) {
+	defer func() {
+		log.Get().Error(context.Background(), err)
 		if err != nil {
 			for _, lt := range isSuccess {
-				go m.rollbackLimit(ctx, valInflated, lt.limit, card.ID, lt.retType)
+				go m.rollbackLimit(context.Background(), valInflated, lt.limit, card.ID, lt.retType)
 			}
 		}
-	}(err)
+	}()
 
 	if len(isSuccess) != len(limits) {
 		err = errutil.ErrCardLimitExceeded
