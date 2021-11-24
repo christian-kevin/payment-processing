@@ -39,7 +39,7 @@ func (r *redigoImpl) DecrX(key string, limit int64, value int64, ttl time.Durati
 	conn := r.GetConn()
 	defer conn.Close()
 
-	reply, err = redis.Int64(decrWithLimitScript.Do(conn, key, limit, value, ttl.Seconds()))
+	reply, err = redis.Int64(decrWithLimitScript.Do(conn, key, limit, value, int64(ttl.Seconds())))
 	if err != nil {
 		return 0, err
 	}

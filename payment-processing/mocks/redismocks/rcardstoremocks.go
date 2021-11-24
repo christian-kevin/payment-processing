@@ -33,17 +33,17 @@ func (m *MockRCardStore) EXPECT() *MockRCardStoreMockRecorder {
 }
 
 // CreateTransaction mocks base method
-func (m *MockRCardStore) CreateTransaction(arg0, arg1, arg2 int64) error {
+func (m *MockRCardStore) CreateTransaction(arg0, arg1, arg2 int64, arg3 int) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTransaction", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "CreateTransaction", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreateTransaction indicates an expected call of CreateTransaction
-func (mr *MockRCardStoreMockRecorder) CreateTransaction(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockRCardStoreMockRecorder) CreateTransaction(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTransaction", reflect.TypeOf((*MockRCardStore)(nil).CreateTransaction), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTransaction", reflect.TypeOf((*MockRCardStore)(nil).CreateTransaction), arg0, arg1, arg2, arg3)
 }
 
 // LockCreateCard mocks base method

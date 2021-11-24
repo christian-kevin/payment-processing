@@ -37,11 +37,8 @@ func routerStart(dep *dependencies) *routergroup.Router {
 }
 
 func handlePublicRoutes(router *routergroup.Router, dep *dependencies) {
-	tenantMiddleware := middleware.NewTenant()
-	authMiddleware := middleware.NewAuth()
-
 	publicGroup := router.Group("/public")
-	publicGroup.Use(middleware.InjectCors, tenantMiddleware.Enforce, authMiddleware.Enforce)
+	publicGroup.Use(middleware.InjectCors)
 
 	module := handler.NewModule(
 		dep.rCardStore,

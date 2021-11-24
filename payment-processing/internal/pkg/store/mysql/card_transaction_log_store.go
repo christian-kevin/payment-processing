@@ -6,6 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"spenmo/payment-processing/payment-processing/internal/pkg/component"
 	dto "spenmo/payment-processing/payment-processing/internal/pkg/store"
+	"spenmo/payment-processing/payment-processing/internal/pkg/timeutil"
 )
 
 type cardTransactionLogStore struct {
@@ -35,6 +36,7 @@ const (
 )
 
 func (c *cardTransactionLogStore) CreateLog(ctx context.Context, execer Execer, log *dto.CardTransactionLog) error {
+	log.CreatedAt = timeutil.NowMillis()
 	_, err := execer.NamedExecContext(ctx, insertCardTransactionLog, log)
 	if err != nil {
 		return fmt.Errorf("failed to insert card transaction log %v: %w", log, err)

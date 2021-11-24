@@ -47,17 +47,17 @@ func (mr *MockRWalletStoreMockRecorder) LockCreateWallet(arg0 interface{}) *gomo
 }
 
 // LockUpdateWallet mocks base method
-func (m *MockRWalletStore) LockUpdateWallet(arg0, arg1 int64) error {
+func (m *MockRWalletStore) LockUpdateWallet(arg0 int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LockUpdateWallet", arg0, arg1)
+	ret := m.ctrl.Call(m, "LockUpdateWallet", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // LockUpdateWallet indicates an expected call of LockUpdateWallet
-func (mr *MockRWalletStoreMockRecorder) LockUpdateWallet(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockRWalletStoreMockRecorder) LockUpdateWallet(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockUpdateWallet", reflect.TypeOf((*MockRWalletStore)(nil).LockUpdateWallet), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockUpdateWallet", reflect.TypeOf((*MockRWalletStore)(nil).LockUpdateWallet), arg0)
 }
 
 // ReleaseLockCreateWallet mocks base method
@@ -75,15 +75,15 @@ func (mr *MockRWalletStoreMockRecorder) ReleaseLockCreateWallet(arg0 interface{}
 }
 
 // ReleaseLockUpdateWallet mocks base method
-func (m *MockRWalletStore) ReleaseLockUpdateWallet(arg0, arg1 int64) error {
+func (m *MockRWalletStore) ReleaseLockUpdateWallet(arg0 int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReleaseLockUpdateWallet", arg0, arg1)
+	ret := m.ctrl.Call(m, "ReleaseLockUpdateWallet", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // ReleaseLockUpdateWallet indicates an expected call of ReleaseLockUpdateWallet
-func (mr *MockRWalletStoreMockRecorder) ReleaseLockUpdateWallet(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockRWalletStoreMockRecorder) ReleaseLockUpdateWallet(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReleaseLockUpdateWallet", reflect.TypeOf((*MockRWalletStore)(nil).ReleaseLockUpdateWallet), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReleaseLockUpdateWallet", reflect.TypeOf((*MockRWalletStore)(nil).ReleaseLockUpdateWallet), arg0)
 }

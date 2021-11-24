@@ -94,6 +94,21 @@ func (mr *MockWalletStoreMockRecorder) DBX() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DBX", reflect.TypeOf((*MockWalletStore)(nil).DBX))
 }
 
+// GetWalletByID mocks base method
+func (m *MockWalletStore) GetWalletByID(arg0 context.Context, arg1 mysql.Querier, arg2 int64) (*store.Wallet, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWalletByID", arg0, arg1, arg2)
+	ret0, _ := ret[0].(*store.Wallet)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWalletByID indicates an expected call of GetWalletByID
+func (mr *MockWalletStoreMockRecorder) GetWalletByID(arg0, arg1, arg2 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWalletByID", reflect.TypeOf((*MockWalletStore)(nil).GetWalletByID), arg0, arg1, arg2)
+}
+
 // GetWalletByUserID mocks base method
 func (m *MockWalletStore) GetWalletByUserID(arg0 context.Context, arg1 mysql.Querier, arg2 int64) (*store.Wallet, error) {
 	m.ctrl.T.Helper()

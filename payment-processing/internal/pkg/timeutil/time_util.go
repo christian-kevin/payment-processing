@@ -61,3 +61,8 @@ func ConvertMinuteToMillis(minute int64) int64 {
 func ConvertTimeToMillis(t time.Time) int64 {
 	return t.UnixNano() / int64(time.Millisecond)
 }
+
+func Bod(t time.Time) time.Time {
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
+}

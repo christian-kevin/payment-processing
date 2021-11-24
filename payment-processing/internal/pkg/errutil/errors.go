@@ -12,4 +12,6 @@ var (
 	ErrWalletNotFound       = errors.New("wallet not found")
 	ErrCardNotFound         = errors.New("card not found")
 	ErrRateLimitExceeded    = errors.New("rate limit exceeded")
+	ErrCardLimitExceeded    = errors.New("card limit exceeded")
+	ErrNotEnoughBalance     = errors.New("not enough balance")
 )

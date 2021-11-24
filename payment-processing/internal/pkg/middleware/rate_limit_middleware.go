@@ -37,11 +37,3 @@ func (l *MustRateLimit) Enforce(next http.Handler, page string) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
-
-//func (l *MustRateLimit) SetRateLimitPage(next http.Handler, page string) http.Handler {
-//	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-//		ctx := context.WithValue(r.Context(), contextutil.XRateLimitKey, page)
-//		r.Context().Value(ctx)
-//		next.ServeHTTP(w, r)
-//	})
-//}

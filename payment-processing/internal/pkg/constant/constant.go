@@ -6,6 +6,9 @@ const (
 	LimitTypeDaily   = 0
 	LimitTypeMonthly = 1
 
+	ParentLimitTypeCard = 0
+	ParentLimitTypeWallet = 1
+
 	IsActive  = 0
 	IsDeleted = 1
 

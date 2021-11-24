@@ -10,15 +10,28 @@ import (
 func ApplyRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.MustRateLimit) {
 	applyWalletRoutes(r, m, rr)
 	applyCardRoutes(r, m, rr)
+	applyPublicCardRoutes(r, m, rr)
 }
 
 func applyWalletRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.MustRateLimit) {
-	r.POST("/v1/wallet", api.CreateWallet(m.CreateWallet))
-	r.GET("/v1/wallet", api.GetWallet(m.GetWallet))
+	r = r.Group("/v1/wallet")
+	tenantMiddleware := middleware.NewTenant()
+	authMiddleware := middleware.NewAuth()
+	r.Use(tenantMiddleware.Enforce, authMiddleware.Enforce)
+	r.POST("", api.CreateWallet(m.CreateWallet))
+	r.GET("", api.GetWallet(m.GetWallet))
 }
 
 func applyCardRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.MustRateLimit) {
-	r.POST("/v1/card", rr.Enforce(api.CreateCard(m.CreateCard), "create-card") )
-	r.GET("/v1/card/multiple", rr.Enforce(api.GetCards(m.GetCards), "get-card-multiple"))
-	r.DELETE("/v1/card", api.DeleteCard(m.DeleteCard))
+	r = r.Group("/v1/card")
+	tenantMiddleware := middleware.NewTenant()
+	authMiddleware := middleware.NewAuth()
+	r.Use(tenantMiddleware.Enforce, authMiddleware.Enforce)
+	r.POST("", rr.Enforce(api.CreateCard(m.CreateCard), "create-card") )
+	r.GET("/multiple", rr.Enforce(api.GetCards(m.GetCards), "get-card-multiple"))
+	r.DELETE("", api.DeleteCard(m.DeleteCard))
+}
+
+func applyPublicCardRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.MustRateLimit) {
+	r.POST("/v1/card/public/transaction", api.CreateTransaction(m.CreateTransaction))
 }

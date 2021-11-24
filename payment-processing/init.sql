@@ -69,3 +69,5 @@ CREATE TABLE limits (
   PRIMARY KEY(id),
   KEY k_parent_type_parent_id_on_limits(parent_type, parent_id) USING BTREE
 );
+
+INSERT INTO limits (parent_id, parent_type, amount, type) VALUES (1, 0, 50000000000, 0);

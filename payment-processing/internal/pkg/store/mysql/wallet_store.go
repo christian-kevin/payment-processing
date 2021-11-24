@@ -44,6 +44,19 @@ const (
 			id = ?
 	`
 
+	getWalletByIDQuery = `
+		select 
+			id,
+			balance,
+			parent_id,
+			parent_type,
+			country
+		from
+			wallet
+		where
+			id = ?
+	`
+
 	getWalletByParentIDAndParentKey = `
 		select 
 			id,
@@ -85,6 +98,19 @@ func (w *walletStore) GetWalletByUserID(ctx context.Context, querier Querier, us
 		}
 
 		return nil, fmt.Errorf("failed to find wallet by user id %d: %w", userID, err)
+	}
+
+	return &wallet, nil
+}
+
+func (w *walletStore) GetWalletByID(ctx context.Context, querier Querier, id int64) (*dto.Wallet, error) {
+	var wallet dto.Wallet
+	if err := querier.GetContext(ctx, &wallet, getWalletByIDQuery, id); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, fmt.Errorf("failed to find wallet by id %d: %w", id, err)
 	}
 
 	return &wallet, nil

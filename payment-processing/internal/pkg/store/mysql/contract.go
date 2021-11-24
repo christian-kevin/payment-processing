@@ -31,6 +31,7 @@ type WalletStore interface {
 	CreateWallet(ctx context.Context, execer Execer, wallet *dto.Wallet) (walletID int64, err error)
 	ModifyBalance(ctx context.Context, execer Execer, inflatedNewBalance int64, walletID int64) error
 	GetWalletByUserID(ctx context.Context, querier Querier, userID int64) (*dto.Wallet, error)
+	GetWalletByID(ctx context.Context, querier Querier, id int64) (*dto.Wallet, error)
 }
 
 type CardStore interface {

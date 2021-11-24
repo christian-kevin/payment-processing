@@ -26,7 +26,7 @@ func (k walletKey) toCreateKey() string {
 }
 
 func (k walletKey) toUpdateKey() string {
-	return fmt.Sprintf("%s:update_wallet:%d:%d", config.AppConfig.Env, k.walletID, k.userID)
+	return fmt.Sprintf("%s:update_wallet:%d", config.AppConfig.Env, k.walletID)
 }
 
 const (
@@ -41,11 +41,11 @@ func (s *rWalletStore) ReleaseLockCreateWallet(userID int64) error {
 	return s.client.Del(walletKey{userID: userID}.toCreateKey())
 }
 
-func (s *rWalletStore) LockUpdateWallet(userID, walletID int64) error {
-	return s.client.SetNX(walletKey{userID: userID, walletID: walletID}.toUpdateKey(), strconv.FormatBool(true),
+func (s *rWalletStore) LockUpdateWallet(walletID int64) error {
+	return s.client.SetNX(walletKey{walletID: walletID}.toUpdateKey(), strconv.FormatBool(true),
 	redisTTLLockWallet)
 }
 
-func (s *rWalletStore) ReleaseLockUpdateWallet(userID, walletID int64) error {
-	return s.client.Del(walletKey{userID: userID, walletID: walletID}.toUpdateKey())
+func (s *rWalletStore) ReleaseLockUpdateWallet(walletID int64) error {
+	return s.client.Del(walletKey{walletID: walletID}.toUpdateKey())
 }
