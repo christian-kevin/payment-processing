@@ -84,7 +84,6 @@ func (m *Module) processTransaction(ctx context.Context, valInflated int64, limi
 		}
 	}
 	defer func() {
-		log.Get().Error(context.Background(), err)
 		if err != nil {
 			for _, lt := range isSuccess {
 				go m.rollbackLimit(context.Background(), valInflated, lt.limit, card.ID, lt.retType)
