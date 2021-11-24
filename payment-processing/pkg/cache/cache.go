@@ -58,6 +58,7 @@ type HashCacher interface {
 type Cache interface {
 	Cacher
 	HashCacher
+	Scripter
 	// SetNX et key to hold string value if key does not exist
 	SetNX(key, value string, ttl time.Duration) error
 	// ZAddXX add member to sorted set. Score is updated with new value. Never add score.
@@ -87,6 +88,11 @@ type Cache interface {
 	ZRem(key string, members ...string) (int64, error)
 	Expire(key string, ttl time.Duration) (int64, error)
 	Exists(key string) (bool, error)
+}
+
+// Scripter is interface contract for redis scripting
+type Scripter interface {
+	DecrX(key string, limit int64, value int64, ttl time.Duration) (int64, error)
 }
 
 type HMulti struct {

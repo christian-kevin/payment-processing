@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"path/filepath"
+	"spenmo/payment-processing/payment-processing/internal/pkg/constant"
 	"spenmo/payment-processing/payment-processing/internal/pkg/timeutil"
 )
 
@@ -55,6 +56,10 @@ type config struct {
 	MySQLDB      string
 	MySQLMaxIdle int
 	MySQLMaxOpen int
+
+	RateLimitEnabled bool
+	RateLimitValue   int64
+	RateLimitUnit    string
 }
 
 func parseConfigFilePath() string {
@@ -88,6 +93,7 @@ func InitializeAppConfig() {
 
 	initRedis(&AppConfig)
 	initMySQL(&AppConfig)
+	initRateLimit(&AppConfig)
 }
 
 func initRedis(c *config) {
@@ -112,6 +118,19 @@ func initRedis(c *config) {
 
 	if c.RedisMaxIdleTimeoutMinute = viper.GetInt64("redismaxidletimeoutminute"); c.RedisMaxIdleTimeoutMinute == 0 {
 		c.RedisMaxIdleTimeoutMinute = 2
+	}
+}
+
+func initRateLimit(c *config) {
+	c.RateLimitEnabled = viper.GetBool("ratelimitenabled")
+
+	if c.RateLimitEnabled {
+		if c.RateLimitValue = viper.GetInt64("ratelimitvalue"); c.RateLimitValue <= 0 {
+			panic("rate limit value missing in config")
+		}
+		if c.RateLimitUnit = viper.GetString("ratelimitunit"); c.RateLimitUnit != constant.Minute && c.RateLimitUnit != constant.Hour {
+			panic("rate limit unit invalid or missing in config")
+		}
 	}
 }
 

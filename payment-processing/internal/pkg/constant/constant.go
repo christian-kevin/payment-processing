@@ -8,4 +8,7 @@ const (
 
 	IsActive  = 0
 	IsDeleted = 1
+
+	Minute = "minute"
+	Hour   = "hour"
 )

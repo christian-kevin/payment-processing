@@ -1,5 +1,7 @@
 package redis
 
+import "time"
+
 type Store interface {
 	Ping() error
 }
@@ -17,4 +19,16 @@ type RCardStore interface {
 	ReleaseLockCreateCard(walletID int64) error
 
 	CreateTransaction(limit int64, amount int64, cardID int64) error
+}
+
+type RateLimitStore interface {
+	Allow(page string, r *RateLimit) error
+}
+
+
+
+type RateLimit struct {
+	Limit int64
+	Ttl   time.Duration
+	Unit  string
 }

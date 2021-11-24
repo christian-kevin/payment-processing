@@ -11,4 +11,5 @@ var (
 	ErrWalletAlreadyExist   = errors.New("wallet already exist")
 	ErrWalletNotFound       = errors.New("wallet not found")
 	ErrCardNotFound         = errors.New("card not found")
+	ErrRateLimitExceeded    = errors.New("rate limit exceeded")
 )

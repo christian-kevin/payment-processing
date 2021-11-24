@@ -2,7 +2,10 @@ package webservice
 
 import (
 	"net/http"
+	"spenmo/payment-processing/payment-processing/config"
 	"spenmo/payment-processing/payment-processing/internal/pkg/component"
+	"spenmo/payment-processing/payment-processing/internal/pkg/middleware"
+	"spenmo/payment-processing/payment-processing/internal/pkg/ratelimiter"
 	"spenmo/payment-processing/payment-processing/internal/pkg/store/mysql"
 	"spenmo/payment-processing/payment-processing/internal/pkg/store/redis"
 	log "spenmo/payment-processing/payment-processing/pkg/logger"
@@ -20,6 +23,9 @@ func Start() {
 
 	rCardStore := redis.NewCardStore(cache)
 	rWalletStore := redis.NewWalletStore(cache)
+	rRateLimitStore := redis.NewRateLimitStore(cache)
+	rateLimiter := ratelimiter.NewRateLimiter(rRateLimitStore)
+	r := middleware.NewMustRateLimit(rateLimiter, config.AppConfig.RateLimitEnabled)
 
 	walletStore := mysql.NewWalletStore(database)
 	cardStore := mysql.NewCardStore(database)
@@ -37,5 +43,6 @@ func Start() {
 		limitStore:              limitStore,
 		cardTransactionLogStore: cardTransactionLogStore,
 		walletBalanceLogStore:   walletBalanceLogStore,
+		rateLimiter:             r,
 	})).Error())
 }

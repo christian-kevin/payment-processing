@@ -24,6 +24,7 @@ type dependencies struct {
 	limitStore              mysql.LimitStore
 	cardTransactionLogStore mysql.CardTransactionLogStore
 	walletBalanceLogStore   mysql.WalletBalanceLogStore
+	rateLimiter             *middleware.MustRateLimit
 }
 
 // Init to initialize the web-service router
@@ -50,7 +51,7 @@ func handlePublicRoutes(router *routergroup.Router, dep *dependencies) {
 		dep.limitStore,
 		dep.cardTransactionLogStore,
 		dep.walletBalanceLogStore)
-	controller.ApplyRoutes(publicGroup, module)
+	controller.ApplyRoutes(publicGroup, module, dep.rateLimiter)
 }
 
 func Ping(dep *dependencies) http.HandlerFunc {

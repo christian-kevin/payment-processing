@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-type middleware func(handler http.Handler) http.Handler
+type middleware func(http.Handler) http.Handler
 
 // Router is a http.Handler that wraps httprouter.Router with additional features.
 type Router struct {
