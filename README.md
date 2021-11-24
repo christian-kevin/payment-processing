@@ -20,6 +20,8 @@
   to order service and path replaced to `https://public/v1/status/xxxxx`
 - Card number generation use Luhn algorithm with IIN of mastercard
 - Expiry date will took ID current local date time + 2 years
+- When creating balance will automatically add 10 mil IDR credit
+- For now currency will be IDR, but db support other currency based on `country` field in `wallet` table
 
 ###Directory Structure
 I am using directory structure guideline from [golang standard](https://github.com/golang-standards/project-layout)
@@ -37,3 +39,10 @@ I am using directory structure guideline from [golang standard](https://github.c
 1. install `docker-compose`
 2. run `docker-compose up --build`
 3. api can accessed on `http://localhost:8080/public/{api}`
+
+##Observability Plan
+- Can send metrics to prometheus for every transaction (ex: `create card` / `create wallet`), showed in grafana
+- Log already standardized (`context_id`, `message`, `stack_trace`, etc), can add ingress / egress log if using microservice / 3rd party service. 
+  Log then scraped from stdout by fluentd using regex to elasticsearch.
+- Log in elasticsearch can put on graylog / kibana / even add in grafana for monitoring.
+- From kibana / graylog can add alerting when reaches certain threshold, sent to telegram / slack channel /etc

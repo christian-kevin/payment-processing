@@ -23,6 +23,8 @@ func errorToHTTPStatus(err error) int {
 	case errutil.ErrWalletNotFound,
 		errutil.ErrCardNotFound:
 		return http.StatusNotFound
+	case errutil.ErrRateLimitExceeded:
+		return http.StatusTooManyRequests
 	case errutil.ErrInvalidParam,
 		errutil.ErrWalletAlreadyExist,
 		errutil.ErrDuplicateRequest:

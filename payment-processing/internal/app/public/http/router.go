@@ -18,7 +18,7 @@ func applyWalletRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.
 }
 
 func applyCardRoutes(r *routergroup.Router, m *handler.Module, rr *middleware.MustRateLimit) {
-	r.Use(rr.SetPage("create_card").Enforce).POST("/v1/card", api.CreateCard(m.CreateCard))
-	r.Use(rr.SetPage("get_card_multiple").Enforce).GET("/v1/card/multiple", api.GetCards(m.GetCards))
+	r.POST("/v1/card", rr.Enforce(api.CreateCard(m.CreateCard), "create-card") )
+	r.GET("/v1/card/multiple", rr.Enforce(api.GetCards(m.GetCards), "get-card-multiple"))
 	r.DELETE("/v1/card", api.DeleteCard(m.DeleteCard))
 }

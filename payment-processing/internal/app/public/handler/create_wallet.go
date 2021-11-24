@@ -35,11 +35,17 @@ func (m *Module) CreateWallet(ctx context.Context, userID int64, country string)
 		return nil, errutil.ErrWalletAlreadyExist
 	}
 
+	balance, err := convertutil.InflatePrice("10000000")
+	if err != nil {
+		log.Get().Errorf(ctx, "error inflate balance, err: %s", err.Error())
+		return nil, errutil.ErrServerError
+	}
+
 	wallet := store.Wallet{
-		Balance:    0,
+		Balance:    *balance,
 		ParentID:   userID,
 		ParentType: constant.ParentTypeUser,
-		Country:    country,
+		Country:    constant.CountryID,
 	}
 
 	id, err := m.walletStore.CreateWallet(ctx, tx, &wallet)

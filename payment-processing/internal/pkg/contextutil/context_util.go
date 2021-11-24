@@ -12,6 +12,7 @@ type key int
 const (
 	XTenantKey = key(iota)
 	XUserIDKey
+	XRateLimitKey
 )
 
 func ExtractTenantID(ctx context.Context) (string, error) {
@@ -31,4 +32,14 @@ func ExtractUserID(ctx context.Context) (int64, error) {
 	}
 
 	return val, nil
+}
+
+func ExtractPageRateLimit(ctx context.Context) (string, error) {
+	val, ok := ctx.Value(XRateLimitKey).(string)
+	if !ok {
+		log.Get().Error(log.GetEmptyContext(), "value context", ctx.Value(XRateLimitKey))
+		return "", errutil.ErrContextValueNotFound
+	}
+
+	return strings.ToLower(val), nil
 }

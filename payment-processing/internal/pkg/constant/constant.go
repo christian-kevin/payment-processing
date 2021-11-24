@@ -11,4 +11,6 @@ const (
 
 	Minute = "minute"
 	Hour   = "hour"
+
+	CountryID = "id"
 )
