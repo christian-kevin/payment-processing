@@ -39,7 +39,7 @@ CREATE TABLE card (
   is_deleted TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY(id),
   KEY k_wallet_id_on_card(wallet_id) USING BTREE,
-  KEY k_card_number_expiry_date_on_card(card_number, expiry_date) USING BTREE
+  UNIQUE KEY k_card_number_expiry_date_on_card(card_number) USING BTREE
 );
 
 CREATE TABLE card_transaction_log (
